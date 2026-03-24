@@ -1,0 +1,122 @@
+//Лабораторна робота 9. Двовимірні масиви.
+
+#include <iostream>
+using namespace std;
+#include <windows.h>
+
+int main()
+{
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    const int ROWS = 5;
+    const int COLS = 5;
+    int array[ROWS][COLS];
+
+    srand(time(NULL));
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            array[i][j] = rand() % 10;
+        }
+    }
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            cout << array[i][j] << '\t';
+        }
+
+        cout << endl;
+    }
+
+    cout << endl;
+
+    int evenCount = 0;
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        bool hasZero = false;
+
+        for (int j = 0; j < COLS; j++)
+        {
+            if (array[i][j] == 0)
+            {
+                hasZero = true;
+                break;
+            }
+        }
+
+        if (hasZero)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                if (array[i][j] % 2 == 0)
+                {
+                    evenCount++;
+                }
+            }
+        }
+    }
+
+    cout << "Number of even elements in rows with at least one zero: " << evenCount << endl;
+
+    bool isPrime = true;
+
+    if (evenCount <= 1)
+    {
+        isPrime = false;
+    }
+    else
+    {
+        for (int k = 2; k <= evenCount / 2; k++)
+        {
+            if (evenCount % k == 0)
+            {
+                isPrime = false;
+                break;
+            }
+        }
+    }
+
+    if (isPrime)
+    {
+        cout << "The number " << evenCount << " is prime." << endl;
+    }
+    else
+    {
+        cout << "The number " << evenCount << " is not prime." << endl;
+    }
+
+    cout << endl;
+
+    int minArray[COLS];
+
+    for (int j = 0; j < COLS; j++)
+    {
+        int minElement = array[0][j];
+
+        for (int i = 1; i < ROWS; i++)
+        {
+            if (array[i][j] < minElement)
+            {
+                minElement = array[i][j];
+            }
+        }
+
+        minArray[j] = minElement;
+    }
+
+    cout << "single-dimensional array of minimum column elements:" << endl;
+    for (int j = 0; j < COLS; j++)
+    {
+        cout << minArray[j] << '\t';
+    }
+
+    cout << endl;
+
+    return 0;
+}
