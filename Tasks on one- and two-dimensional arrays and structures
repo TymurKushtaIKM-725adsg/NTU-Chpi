@@ -1,0 +1,133 @@
+//Виконано завдання: 1,6,11,12,13.
+
+//Завдання 1. Створити масив з 10 цілих чисел, заповнити його з клавіатури, вивести всі елементи масиву та знайти суму всіх елементів.
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    const int SIZE = 10;
+    int array[SIZE];
+    int sum = 0;
+
+    cout << "Enter 10 integers:" << endl;
+    for (int i = 0; i < SIZE; i++)
+    {
+        cout << "array[" << i << "] = ";
+        cin >> array[i];
+    }
+
+    cout << "\nArray elements:" << endl;
+    for (int i = 0; i < SIZE; i++)
+    {
+        cout << array[i] << '\t';
+        sum += array[i];
+    }
+
+    cout << endl;
+    cout << "\nSum of all elements: " << sum << endl;
+
+    return 0;
+}
+
+
+
+
+
+//Завдання 6. Створити двовимірний масив розміром 3 на 3, заповнити його з клавіатури та вивести у вигляді матриці. 
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    const int ROWS = 3;
+    const int COLS = 3;
+    int array[ROWS][COLS];
+
+    cout << "Enter elements for 3x3 matrix:\n";
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            cout << "array[" << i << "][" << j << "] = ";
+            cin >> array[i][j];
+        }
+    }
+
+    cout << "\nMatrix 3x3:\n";
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            cout << array[i][j] << '\t';
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+//Завдання 11-13
+//Завдання 11. Описати структуру Student, яка містить ім’я, вік та середній бал, створити масив з 5 студентів, заповнити його та вивести всі дані.
+
+#include <iostream>
+using namespace std;
+
+struct Student
+{
+    string Name;
+    int Age;
+    double AverageGrade; //Наприклад Grade від 0 до 5.0
+};
+
+int main()
+{
+    Student students[5]
+    {
+        {"Ivan", 18, 3.5},
+        {"Petro", 19, 4.8},
+        {"Mariia", 18, 3.9},
+        {"Anna", 20, 4.2},
+        {"Dmytro", 19, 4.6}
+    };
+
+    cout << "Student data:\n";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "Name: " << students[i].Name << " | Age: " << students[i].Age << " | Average grade: " << students[i].AverageGrade << endl;
+    }
+
+    //Завдання 12. Знаходження студента з найбільшим середнім балом
+    Student topStudent = students[0];
+
+    for (int i = 1; i < 5; i++)
+    {
+        if (students[i].AverageGrade > topStudent.AverageGrade)
+        {
+            topStudent = students[i];
+        }
+    }
+
+    cout << "Student with the highest average grade:\n";
+    cout << "Name: " << topStudent.Name << " | Age: " << topStudent.Age << " | Average grade: " << topStudent.AverageGrade << "\n";
+
+    //Завдання 13. Виведення студентів із середнім балом більшим за 4.0
+    cout << "Students with an average grade > 4.0:\n";
+    for (int i = 0; i < 5; i++)
+    {
+        if (students[i].AverageGrade > 4.0)
+        {
+            cout << "Name: " << students[i].Name << " | Age: " << students[i].Age << " | Average grade: " << students[i].AverageGrade << "\n";
+        }
+    }
+
+    return 0;
+}
