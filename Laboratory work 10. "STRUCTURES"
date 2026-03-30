@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+struct Student
+{
+    char Surname[50];
+    double AverageGrade; //e.g. 0 - 5.0
+    int Id;
+};
+
+int main()
+{
+    const int SIZE = 5;
+
+    Student students[SIZE]
+    {
+        {"Ivanov", 4.5, 1},
+        {"Petrov", 3.2, 2},
+        {"Sydorov", 2.8, 3},
+        {"Konstantin",4.2,4},
+        {"Olena", 4.8, 5}
+    };
+
+    cout << "Full student list:\n";
+    for (int i = 0; i < SIZE; i++)
+    {
+        cout << "ID: " << students[i].Id << " | Surname: " << students[i].Surname << " | Average grade: " << students[i].AverageGrade << "\n";
+    }
+
+    cout << "\nStudents receiving a scholarship (grade > 4.0):\n";
+    for (int i = 0; i < SIZE; i++)
+    {
+        if (students[i].AverageGrade >= 4.0)
+        {
+            cout << students[i].Surname << "\n";
+        }
+    }
+
+    return 0;
+}
