@@ -1,0 +1,103 @@
+/*
+Завдання 18: Дано прямокутну матрицю.
+Створити функцію визначення місця розташування максимального і мінімального чисел.
+*/
+
+#include <iostream>
+using namespace std;
+
+void InitializeArray(int** a, const int ROWS, const int COLS)
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            a[i][j] = rand() % 25;
+        }
+    }
+}
+
+void PrintArray(int** a, const int ROWS, const int COLS)
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            cout << a[i][j] << '\t';
+        }
+        cout << endl;
+    }
+}
+
+void FindMinMaxLocation(int** a, const int ROWS, const int COLS, int& minRow, int& minCol, int& maxRow, int& maxCol)
+{
+    int min = a[0][0];
+    int max = a[0][0];
+
+    minRow = 0;
+    minCol = 0;
+    maxRow = 0;
+    maxCol = 0;
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            if (a[i][j] < min)
+            {
+                min = a[i][j];
+                minRow = i;
+                minCol = j;
+            }
+
+            if (a[i][j] > max)
+            {
+                max = a[i][j];
+                maxRow = i;
+                maxCol = j;
+            }
+        }
+    }
+}
+
+int main()
+{
+    int ROWS = 4;
+    int COLS = 6;
+
+    int** array = new int* [ROWS];
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        array[i] = new int[COLS];
+    }
+
+    srand(time(NULL));
+
+    InitializeArray(array, ROWS, COLS);
+
+    cout << "Matrix:" << endl;
+    PrintArray(array, ROWS, COLS);
+
+    int minElementRow, minElementCol;
+    int maxElementRow, maxElementCol;
+
+    FindMinMaxLocation(array, ROWS, COLS, minElementRow, minElementCol, maxElementRow, maxElementCol);
+
+    cout << "\nMin element is: " << array[minElementRow][minElementCol] << endl;
+    cout << "Min element row index is: " << minElementRow << endl;
+    cout << "Min element col index is: " << minElementCol << endl;
+
+    cout << "\nMax element is: " << array[maxElementRow][maxElementCol] << endl;
+    cout << "Max element row index is: " << maxElementRow << endl;
+    cout << "Max element col index is: " << maxElementCol << endl;
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        delete[] array[i];
+    }
+
+    delete[] array;
+
+    return 0;
+}
