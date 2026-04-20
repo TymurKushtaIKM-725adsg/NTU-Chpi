@@ -1,0 +1,36 @@
+/*
+Завдання : Описати рекурсивну функцію для обчислення n-го члена
+ряду 30, 10, 10/3, 10/9, 10/27, …, 10/729.
+*/
+
+
+#include <iostream>
+using namespace std;
+
+double calculateSeriesTerm(int n);
+
+int main()
+{
+    int n;
+
+    cout << "Enter n: ";
+    cin >> n;
+    cout << "Series terms:" << endl;
+
+    for (int k = 1; k <= n; k++)
+    {
+        cout << "Term " << k << " = " << calculateSeriesTerm(k) << endl;
+    }
+
+    return 0;
+}
+
+double calculateSeriesTerm(int n)
+{
+    if (n == 1)
+    {
+        return 30.0;
+    }
+
+    return calculateSeriesTerm(n - 1) / 3.0;
+}
