@@ -1,0 +1,62 @@
+/*
+Завдання 18: Заповнити масив на 15 елементів за зростанням простими числами.
+Створити функцію інтерполяційного пошуку, яка визначає знаходження заданого з клавіатури числа.
+*/
+
+#include <iostream>
+using namespace std;
+
+int InterpolationSearch(int array[], const int array_size, int search_num)
+{
+    int mid, left = 0, right = array_size - 1;
+
+    while (array[left] <= search_num && array[right] >= search_num)
+    {
+        mid = left + ((search_num - array[left]) * (right - left)) /
+            (array[right] - array[left]);
+
+        if (array[mid] < search_num)
+        {
+            left = mid + 1;
+        }
+        else if (array[mid] > search_num)
+        {
+            right = mid - 1;
+        }
+        else
+        {
+            return mid;
+        }
+    }
+
+    return -1;
+}
+
+int main()
+{
+    const int array_size = 15;
+    int array[array_size] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 };
+
+    for (int i = 0; i < array_size; i++)
+    {
+        cout << array[i] << " ";
+    }
+    cout << endl;
+
+    int search_num;
+    cout << "Enter element to search in array" << endl;
+    cin >> search_num;
+
+    int result = InterpolationSearch(array, array_size, search_num);
+
+    if (result != -1)
+    {
+        cout << "Element " << search_num << " has index " << result << endl;
+    }
+    else
+    {
+        cout << "Element is not in the array" << endl;
+    }
+
+    return 0;
+}
