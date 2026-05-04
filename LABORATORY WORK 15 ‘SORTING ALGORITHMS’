@@ -1,0 +1,72 @@
+/*
+Завдання: В одновимірному масиві, який складається з n дійсних чисел,
+упорядкувати за убуванням окремо елементи, що стоять на парних місцях,
+і елементи, що стоять на непарних місцях.
+*/
+
+
+#include <iostream>
+using namespace std;
+
+void main()
+{
+
+    const int array_size = 10;
+    double array[array_size] = {2.5, 7.1, 1.4, 9.8, 3.3, 4.2, 8.9, 0.5, 6.7, 5.0};
+
+    cout << "Array before sorting:" << endl;
+    for (int i = 0; i < array_size; i++)
+    {
+        cout << array[i] << "  ";
+    }
+    cout << "\n" << endl;
+
+    double temp;
+
+    for (int i = 0; i < array_size; i += 2)
+    {
+        int max_idx = i;
+
+        for (int j = i + 2; j < array_size; j += 2)
+        {
+            if (array[j] > array[max_idx])
+            {
+                max_idx = j;
+            }
+        }
+
+        if (i != max_idx)
+        {
+            temp = array[i];
+            array[i] = array[max_idx];
+            array[max_idx] = temp;
+        }
+    }
+
+    for (int i = 1; i < array_size; i += 2)
+    {
+        int max_idx = i;
+
+        for (int j = i + 2; j < array_size; j += 2)
+        {
+            if (array[j] > array[max_idx])
+            {
+                max_idx = j;
+            }
+        }
+
+        if (i != max_idx)
+        {
+            temp = array[i];
+            array[i] = array[max_idx];
+            array[max_idx] = temp;
+        }
+    }
+
+    cout << "Array after sorting:" << endl;
+    for (int i = 0; i < array_size; i++)
+    {
+        cout << array[i] << "  ";
+    }
+    cout << endl;
+}
