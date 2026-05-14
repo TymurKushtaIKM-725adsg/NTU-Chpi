@@ -1,0 +1,288 @@
+/*
+ 1. Клас "Студент".
+ Створіть клас "Студент", який містить наступні атрибути : ім'я, вік, середній бал.
+ Реалізуйте методи для встановлення та отримання значенькожного атрибута, а також метод для виведення інформації про студента.
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Student
+{
+private:
+    string name;
+    int age;
+    float average_mark;
+
+public:
+    void set_name(string n)
+    {
+        name = n;
+    }
+
+    string get_name()
+    {
+        return name;
+    }
+
+    void set_age(int a)
+    {
+        age = a;
+    }
+
+    int get_age()
+    {
+        return age;
+    }
+
+    void set_average_mark(float mark)
+    {
+        average_mark = mark;
+    }
+
+    float get_average_mark()
+    {
+        return average_mark;
+    }
+
+    void show()
+    {
+        cout << "Student: " << name << " \nAge: " << age << " \nAverage mark: " << average_mark << endl;
+    }
+};
+
+int main()
+{
+    Student number1;
+
+    number1.set_name("Oleg");
+    number1.set_age(19);
+    number1.set_average_mark(83.5);
+
+    number1.show();
+
+    return 0;
+}
+
+/*
+Кінець завдання 1.
+*/
+
+
+
+
+
+/*
+3. Клас "Книга"
+Створіть клас "Книга", що містить атрибути: назва, автор, жанр і рік видання.
+Реалізуйте методи для отримання та встановлення значень кожного
+атрибута, а також метод для виведення інформації про книгу.
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Book
+{
+private:
+    string title;
+    string author;
+    string genre;
+    int year;
+
+public:
+    void set_title(string t)
+    {
+        title = t;
+    }
+    void set_author(string a)
+    {
+        author = a;
+    }
+    void set_genre(string g)
+    {
+        genre = g;
+    }
+    void set_year(int y)
+    {
+        year = y;
+    }
+
+    string get_title()
+    {
+        return title;
+    }
+    string get_author()
+    {
+        return author;
+    }
+    string get_genre()
+    {
+        return genre;
+    }
+    int get_year()
+    {
+        return year;
+    }
+
+    void show()
+    {
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+        cout << "Genre: " << genre << endl;
+        cout << "Year: " << year << endl;
+    }
+};
+
+int main()
+{
+    Book myBook;
+
+    myBook.set_title("The Flash, Vol. 1: Lightning Strikes Twice");
+    myBook.set_author("Joshua Williamson");
+    myBook.set_genre("Sci-Fi");
+    myBook.set_year(2017);
+
+    myBook.show();
+
+    return 0;
+}
+/*
+Кінець завдання 3.
+*/
+
+
+
+
+
+/*
+2. Клас "Трикутник"
+Створіть клас "Трикутник", який містить атрибути для зберігання довжин сторін
+Реалізуйте методи для обчислення периметра і площі
+трикутника, а також метод для перевірки, чи є трикутник прямокутним.
+
+та
+
+1. Клас "Фігура" та його підкласи.
+Створіть клас "Фігура", який має атрибут для кольору.
+Створіть підкласи, такі як "Коло", "Прямокутник" та "Трикутник", які наслідують клас "Фігура".
+Кожен з підкласів повинен мати свої власні атрибути та методи, наприклад, для обчислення площі.
+*/
+
+#include <iostream>
+#include <string>
+#include <cmath> //для sqrt та pow
+using namespace std;
+
+class Figure
+{
+protected:
+    string name;
+
+public:
+    void set_name(string c)
+    {
+        name = c;
+    }
+    string get_name()
+    {
+        return name;
+    }
+};
+
+class Circle : public Figure
+{
+private:
+    double radius;
+
+public:
+    void set_radius(double r)
+    {
+        radius = r;
+    }
+    double calculate_area()
+    {
+        return 3.14 * radius * radius;
+    }
+    void show()
+    {
+        cout << "Circle (" << name << ") Area: " << calculate_area() << endl;
+    }
+};
+
+class Rectangle : public Figure
+{
+private:
+    double width, height;
+
+public:
+    void set_size(double w, double h)
+    {
+        width = w;
+        height = h;
+    }
+    double calculate_area()
+    {
+        return width * height;
+    }
+    void show()
+    {
+        cout << " Rectangle (" << name << ") Area: " << calculate_area() << endl;
+    }
+};
+
+class Triangle : public Figure
+{
+private:
+    double a, b, c;
+
+public:
+    void set_sides(double side1, double side2, double side3)
+    {
+        a = side1; b = side2; c = side3;
+    }
+
+    double calculate_perimeter()
+    {
+        return a + b + c;
+    }
+
+    double calculate_area()
+    {
+        double p = calculate_perimeter() / 2;
+        return sqrt(p * (p - a) * (p - b) * (p - c));
+    }
+
+    bool is_right_angled()
+    {
+        return (pow(a, 2) + pow(b, 2) == pow(c, 2) || pow(a, 2) + pow(c, 2) == pow(b, 2) || pow(b, 2) + pow(c, 2) == pow(a, 2));
+    }
+
+    void show()
+    {
+        cout << " Triangle (" << name << "):" << endl;
+        cout << " Perimeter: " << calculate_perimeter() << endl;
+        cout << " Area: " << calculate_area() << endl;
+        cout << " Right-angled: " << (is_right_angled() ? "Yes" : "No") << endl;
+    }
+};
+
+int main()
+{
+    Rectangle rect;
+    rect.set_name("ABCD");
+    rect.set_size(5, 10);
+    rect.show();
+
+    Triangle tri;
+    tri.set_name("EFG");
+    tri.set_sides(3, 4, 5);
+    tri.show();
+
+    return 0;
+}
+/*
+Кінець завдання Інкапсуляція 2 + Наслідування 1.
+*/
