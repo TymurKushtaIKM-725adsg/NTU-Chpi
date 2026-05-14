@@ -1,0 +1,137 @@
+/*
+Розробити класи для описаних нижче об'єктів. Включити в клас методи set(…), get (…), show (…). Визначити інші методи.
+Варіант 18 - Bus: Пункт призначення, Номер автобуса, Час відправлення, Число місць.
+Створити масив об'єктів, вивести:
+а) список автобусів, які прямують до заданого пункту призначення;
+б) список автобусів, які прямують до заданого пункту призначення і відправляються після заданої години;
+в) список автобусів, які відправляються до заданого пункту призначення і мають спільні місця.
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Bus
+{
+private:
+    string destination;
+    int busNumber;
+    double departureTime;
+    int seats;
+    bool hasCommonSeats;
+
+public:
+    Bus() {}
+
+    Bus(string dest, int busNum, double depTime, int s, bool hasCommon)
+    {
+        destination = dest;
+        busNumber = busNum;
+        departureTime = depTime;
+        seats = s;
+        hasCommonSeats = hasCommon;
+    }
+
+    string get_destination()
+    {
+        return destination;
+    }
+    int get_busNumber()
+    {
+        return busNumber;
+    }
+    double get_departureTime()
+    {
+        return departureTime;
+    }
+    int get_seats()
+    {
+        return seats;
+    }
+    bool get_hasCommonSeats()
+    {
+        return hasCommonSeats;
+    }
+
+    void set_destination(string dest)
+    {
+        destination = dest;
+    }
+    void set_busNumber(int num)
+    {
+        busNumber = num;
+    }
+    void set_departureTime(double t)
+    {
+        departureTime = t;
+    }
+    void set_seats(int s)
+    {
+        seats = s;
+    }
+    void set_hasCommonSeats(bool hasCommon)
+    {
+        hasCommonSeats = hasCommon;
+    }
+
+    void show()
+    {
+        cout << "Bus N" << busNumber << " | Destination: " << destination << " | Time: " << departureTime << " | Seats: "
+            << seats << " | Common seats: " << (hasCommonSeats ? "Yes" : "No") << endl;
+    }
+};
+
+int main()
+{
+    const int array_size = 6;
+    Bus buses[array_size] =
+    {
+        Bus("Kharkov", 101, 10.30, 40, false),
+        Bus("Odessa", 202, 12.10, 35, true),
+        Bus("Zaporozhye", 103, 14.45, 50, true),
+        Bus("Odessa", 304, 16.20, 30, false),
+        Bus("Zaporozhye", 105, 18.00, 45, true),
+        Bus("Kharkov", 89, 14.00, 34, true)
+    };
+
+    string targetDest;
+    double targetTime;
+
+    cout << "Available destinations: Kharkov, Odessa, Zaporozhye" << endl;
+    cout << "Enter your destination: ";
+    cin >> targetDest;
+
+    cout << "Enter the time (for example 12.00 or another): ";
+    cin >> targetTime;
+
+    // а) прямують до заданого пункту призначення
+    cout << "a) Buses to " << targetDest << endl;
+    for (int i = 0; i < array_size; i++)
+    {
+        if (buses[i].get_destination() == targetDest)
+        {
+            buses[i].show();
+        }
+    }
+
+    // б) прямують до заданого пункту призначення і відправляються після заданої години
+    cout << "\nb) Buses to " << targetDest << " departing after " << targetTime << endl;
+    for (int i = 0; i < array_size; i++)
+    {
+        if (buses[i].get_destination() == targetDest && buses[i].get_departureTime() > targetTime)
+        {
+            buses[i].show();
+        }
+    }
+
+    // в) відправляються до заданого пункту призначення і мають спільні місця
+    cout << "\nc) Buses to " << targetDest << " with common seats " << endl;
+    for (int i = 0; i < array_size; i++)
+    {
+        if (buses[i].get_destination() == targetDest && buses[i].get_hasCommonSeats())
+        {
+            buses[i].show();
+        }
+    }
+    return 0;
+}
