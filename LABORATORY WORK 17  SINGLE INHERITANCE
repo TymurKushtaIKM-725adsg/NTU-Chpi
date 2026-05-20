@@ -1,0 +1,90 @@
+/*
+Завдання:
+Описати клас «процесор», який містить відомості про марку,тактову частоту, обсяг кеша і вартість.
+Передбачити ініціалізацію з перевіркою допустимості значень полів.
+Описати властивості для отримання стану об'єкта.
+Описати клас материнська плата, що включає клас процесор і об'єм установленої оперативної пам'яті.
+Передбачити ініціалізацію з перевіркою допустимості значень поля обсягу пам'яті.
+Описати властивості для отримання стану об'єкта.
+Написати програму, яка демонструвала б усі розроблені елементи класів.
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Processor
+{
+private:
+    string brand;
+    double frequency;
+    int cache;
+    double price;
+
+public:
+    Processor(string b, double f, int c, double p)
+    {
+        brand = b;
+
+        if (f > 0) frequency = f;
+        else frequency = 1.0;
+
+        if (c > 0) cache = c;
+        else cache = 1;
+
+        if (p >= 0) price = p;
+        else price = 0.0;
+    }
+
+    string get_brand() { return brand; }
+    double get_frequency() { return frequency; }
+    int get_cache() { return cache; }
+    double get_price() { return price; }
+
+    void show_processor()
+    {
+        cout << "Processor brand: " << brand << endl;
+        cout << "Clock frequency: " << frequency << " GHz" << endl;
+        cout << "Cache size: " << cache << " MB" << endl;
+        cout << "Price: " << price << " UAH" << endl;
+    }
+};
+
+class MotherBoard : public Processor
+{
+private:
+    int ram;
+
+public:
+    MotherBoard(string b, double f, int c, double p, int r) : Processor(b, f, c, p)
+    {
+        if (r > 0) ram = r;
+        else ram = 4;
+    }
+
+    int get_ram() { return ram; }
+
+    void show_motherboard()
+    {
+        cout << "System Characteristics: " << endl;
+        show_processor();
+        cout << "RAM capacity: " << ram << " GB" << endl;
+    }
+};
+
+int main()
+{
+    cout << "1) Creating an object with correct parameters:" << endl; // Демонстрація correct parameters
+    MotherBoard pc1("Intel Core i7", 3.8, 12, 8499.99, 16);
+    pc1.show_motherboard();
+
+    cout << "\n2) Creating an object with incorrect parameters:" << endl; // Демонстрація incorrect parameters
+    MotherBoard pc2("AMD Ryzen 5", -2.5, -8, -1500.0, -16);
+    pc2.show_motherboard();
+
+    cout << "\n3) Getting individual properties of the first object:" << endl; // Демонстрація get
+    cout << "Processor: " << pc1.get_brand() << endl;
+    cout << "RAM: " << pc1.get_ram() << " GB" << endl;
+
+    return 0;
+}
