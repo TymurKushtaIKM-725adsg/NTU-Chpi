@@ -1,17 +1,21 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+using namespace std;
 
 // Структура, що описує інтервал
-struct Interval {
+struct Interval
+{
     int low, high;
-    bool operator==(const Interval& other) const {
+    bool operator==(const Interval& other) const
+    {
         return low == other.low && high == other.high;
     }
 };
 
 // Вузол інтервального дерева
-struct Node {
+struct Node
+{
     Interval interval;
     int max_high;
     Node* left;
@@ -20,35 +24,41 @@ struct Node {
     Node(Interval i) : interval(i), max_high(i.high), left(nullptr), right(nullptr) {}
 };
 
-class IntervalTree {
+class IntervalTree
+{
 private:
     Node* root;
 
     // Допоміжна функція для отримання максимального значення
-    int getMax(int a, int b, int c) const {
-        return std::max({a, b, c});
+    int getMax(int a, int b, int c) const
+    {
+        return max({ a, b, c });
     }
 
-    int getHeightOrMax(Node* n) const {
+    int getHeightOrMax(Node* n) const
+    {
         return n ? n->max_high : -1;
     }
 
     // Оновлення параметра max_high у вузлі
-    void updateMax(Node* n) {
+    void updateMax(Node* n)
+    {
         if (n) {
             n->max_high = getMax(n->interval.high, getHeightOrMax(n->left), getHeightOrMax(n->right));
         }
     }
 
     // Рекурсивна вставка
-    Node* insert(Node* root, Interval i) {
+    Node* insert(Node* root, Interval i)
+    {
         if (!root) return new Node(i);
 
         int l = root->interval.low;
 
         if (i.low < l) {
             root->left = insert(root->left, i);
-        } else {
+        }
+        else {
             root->right = insert(root->right, i);
         }
 
@@ -57,34 +67,40 @@ private:
     }
 
     // Перевірка перетину двох інтервалів
-    bool doOverlap(Interval i1, Interval i2) const {
+    bool doOverlap(Interval i1, Interval i2) const
+    {
         return (i1.low <= i2.high && i2.low <= i1.high);
     }
 
     // Рекурсивний пошук
-    void query(Node* root, Interval range, std::vector<Interval>& result) const {
+    void query(Node* root, Interval range, vector<Interval>& result) const
+    {
         if (!root) return;
 
-        if (doOverlap(root->interval, range)) {
+        if (doOverlap(root->interval, range))
+        {
             result.push_back(root->interval);
         }
 
         // Якщо ліве піддерево містить значення max_high, яке більше або дорівнює 
         // лівій межі запиту, перетин можливий у лівому піддереві
-        if (root->left && root->left->max_high >= range.low) {
+        if (root->left && root->left->max_high >= range.low)
+        {
             query(root->left, range, result);
         }
 
         // Перевірка правого піддерева
         // Оскільки дерево відсортоване за лівою межею, ідемо праворуч лише якщо 
         // ліва межа поточного вузла не перевищує праву межу запиту
-        if (root->right && root->interval.low <= range.high) {
+        if (root->right && root->interval.low <= range.high)
+        {
             query(root->right, range, result);
         }
     }
 
     // Пошук мінімального вузла для видалення
-    Node* minValueNode(Node* node) {
+    Node* minValueNode(Node* node)
+    {
         Node* current = node;
         while (current && current->left != nullptr)
             current = current->left;
@@ -92,20 +108,28 @@ private:
     }
 
     // Рекурсивне видалення
-    Node* remove(Node* root, Interval i) {
+    Node* remove(Node* root, Interval i)
+    {
         if (!root) return root;
 
-        if (i.low < root->interval.low) {
+        if (i.low < root->interval.low)
+        {
             root->left = remove(root->left, i);
-        } else if (i.low > root->interval.low || (i.low == root->interval.low && i.high != root->interval.high)) {
+        }
+        else if (i.low > root->interval.low || (i.low == root->interval.low && i.high != root->interval.high))
+        {
             root->right = remove(root->right, i);
-        } else {
+        }
+        else {
             // Вузол знайдено
-            if (!root->left) {
+            if (!root->left)
+            {
                 Node* temp = root->right;
                 delete root;
                 return temp;
-            } else if (!root->right) {
+            }
+            else if (!root->right)
+            {
                 Node* temp = root->left;
                 delete root;
                 return temp;
@@ -123,56 +147,62 @@ private:
 public:
     IntervalTree() : root(nullptr) {}
 
-    void insert(const Interval& interval) {
+    void insert(const Interval& interval)
+    {
         root = insert(root, interval);
     }
 
-    void remove(const Interval& interval) {
+    void remove(const Interval& interval)
+    {
         root = remove(root, interval);
     }
 
-    std::vector<Interval> query(const Interval& range) const {
-        std::vector<Interval> result;
+    vector<Interval> query(const Interval& range) const
+    {
+        vector<Interval> result;
         query(root, range, result);
         return result;
     }
 };
 
 // Приклад використання програми
-int main() {
+int main()
+{
     IntervalTree tree;
 
     // Вставка інтервалів (наприклад, розклад подій)
-    tree.insert({15, 20});
-    tree.insert({10, 30});
-    tree.insert({17, 19});
-    tree.insert({5, 20});
-    tree.insert({12, 15});
-    tree.insert({30, 40});
+    tree.insert({ 15, 20 });
+    tree.insert({ 10, 30 });
+    tree.insert({ 17, 19 });
+    tree.insert({ 5, 20 });
+    tree.insert({ 12, 15 });
+    tree.insert({ 30, 40 });
 
-    std::cout << "Data inserted." << std::endl;
+    cout << "Data inserted." << endl;
 
     // Пошук перетинів
-    Interval searchRange = {14, 16};
-    std::vector<Interval> overlaps = tree.query(searchRange);
+    Interval searchRange = { 14, 16 };
+    vector<Interval> overlaps = tree.query(searchRange);
 
-    std::cout << "\nIntervals overlapping with [" << searchRange.low << ", " << searchRange.high << "]:\n";
-    for (const auto& i : overlaps) {
-        std::cout << "[" << i.low << ", " << i.high << "] ";
+    cout << "\nIntervals overlapping with [" << searchRange.low << ", " << searchRange.high << "]:\n";
+    for (const auto& i : overlaps)
+    {
+        cout << "[" << i.low << ", " << i.high << "] ";
     }
-    std::cout << std::endl;
+    cout << endl;
 
     // Видалення
-    tree.remove({10, 30});
-    std::cout << "\nRemoved [10, 30]" << std::endl;
+    tree.remove({ 10, 30 });
+    cout << "\nRemoved [10, 30]" << endl;
 
     // Повторний пошук
     overlaps = tree.query(searchRange);
-    std::cout << "Intervals overlapping with [" << searchRange.low << ", " << searchRange.high << "] after removal:\n";
-    for (const auto& i : overlaps) {
-        std::cout << "[" << i.low << ", " << i.high << "] ";
+    cout << "Intervals overlapping with [" << searchRange.low << ", " << searchRange.high << "] after removal:\n";
+    for (const auto& i : overlaps)
+    {
+        cout << "[" << i.low << ", " << i.high << "] ";
     }
-    std::cout << std::endl;
+    cout << endl;
 
     return 0;
 }
