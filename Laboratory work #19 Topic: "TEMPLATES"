@@ -1,0 +1,75 @@
+#include <iostream>
+
+using namespace std;
+
+// Визначення глобальних констант для розмірності двовимірних масивів
+const int ROWS = 3;
+const int COLS = 4;
+
+// Шаблонна функція для виведення двовимірного масиву на екран
+template <typename T>
+void printMatrix(T matrix[ROWS][COLS])
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+// Головна шаблонна функція: заміна першого та останнього стовпців у двовимірному масиві
+template <typename T>
+void swapFirstAndLastColumns(T matrix[ROWS][COLS])
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        // Тимчасова змінна узагальненого типу T для обміну значень
+        T temp = matrix[i][0];
+        matrix[i][0] = matrix[i][COLS - 1];
+        matrix[i][COLS - 1] = temp;
+    }
+}
+
+int main()
+{
+    // Ініціалізація цілочислового масиву (тип int)
+    int intMatrix[ROWS][COLS] = {
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 10, 11, 12}
+    };
+
+    // Ініціалізація масиву дійсних чисел (тип double)
+    double doubleMatrix[ROWS][COLS] = {
+        {1.1, 2.2, 3.3, 4.4},
+        {5.5, 6.6, 7.7, 8.8},
+        {9.9, 10.1, 11.11, 12.12}
+    };
+
+    // 1. Демонстрація роботи шаблону для типу int
+    cout << "--- Integer Matrix ---" << endl;
+    cout << "Original matrix:" << endl;
+    printMatrix(intMatrix);
+
+    swapFirstAndLastColumns(intMatrix); // Неявна конкретизація для типу int
+
+    cout << "Matrix after swapping 1st and last columns:" << endl;
+    printMatrix(intMatrix);
+
+
+    // 2. Демонстрація роботи шаблону для типу double
+    cout << "--- Double Matrix ---" << endl;
+    cout << "Original matrix:" << endl;
+    printMatrix(doubleMatrix);
+
+    swapFirstAndLastColumns(doubleMatrix); // Неявна конкретизація для типу double
+
+    cout << "Matrix after swapping 1st and last columns:" << endl;
+    printMatrix(doubleMatrix);
+
+    return 0;
+}
